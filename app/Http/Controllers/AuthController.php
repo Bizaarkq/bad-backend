@@ -47,7 +47,12 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'data' => [
-                'user' => Auth::user(),
+                'user' => [
+                    'name' => auth()->user()->name,
+                    'email' => auth()->user()->email,
+                    'rol' => auth()->user()->roles->pluck('name')[0] ?? '',
+                    'id' => auth()->user()->id,
+                ],
                 'access_token' => $token
             ]
         ], 200);
